@@ -1,0 +1,37 @@
+#!/bin/bash
+
+
+# TODO: if you are running on a cluster, change the info below to match your cluster's configuration.
+#SBATCH -J WeatherForcasting_VAE_SEVIR
+#SBATCH --nodes=1
+#SBATCH --ntasks=2
+#SBATCH --gpus=2
+#SBATCH --cpus-per-task=18
+#SBATCH --partition=gpu_a100
+#SBATCH --time=3-00:00:00
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --mail-user=V.Sarathchandran@student.tudelft.nl
+
+## Explanation about SLURM parameters
+# -J job-name
+# -t time D-HH:MM:SS
+# -p partition
+# -n number of nodes
+# --ntasks-per-node=n
+# --cpus-per-task=n
+# --mem=memory
+# --gpus number of gpus
+# --mail-type=type
+# --mail-user=user
+
+
+# TODO: chnage these lines according to your cluster's configuration
+module load 2023
+conda init
+source activate blockgpt
+export WANDB_API_KEY='241add8d0c5e60aee18d2a6c8334b609c84d9780'
+export WANDB_DIR='/projects/0/prjs0951/Varun/Wandb'
+
+
+accelerate launch --multi_gpu --num_processes=2 train_encoder.py --dataset knmi --encoder vae --encoder_config configs/Encoders/config_vae.json
+

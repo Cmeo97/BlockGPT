@@ -1,0 +1,39 @@
+#!/bin/bash
+
+
+# TODO: if you are running on a cluster, change the info below to match your cluster's configuration.
+#SBATCH -J WeatherForcasting_blockGPT_SEVIR30
+#SBATCH --nodes=1
+#SBATCH --ntasks=2
+#SBATCH --gpus=2
+#SBATCH --cpus-per-task=18
+#SBATCH --partition=gpu_a100
+#SBATCH --time=3-00:00:00
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --mail-user=V.Sarathchandran@student.tudelft.nl
+
+## Explanation about SLURM parameters
+# -J job-name
+# -t time D-HH:MM:SS
+# -p partition
+# -n number of nodes
+# --ntasks-per-node=n
+# --cpus-per-task=n
+# --mem=memory
+# --gpus number of gpus
+# --mail-type=type
+# --mail-user=user
+
+
+# TODO: chnage these lines according to your cluster's configuration
+module load 2023
+conda init
+source activate blockGPT
+export WANDB_API_KEY='241add8d0c5e60aee18d2a6c8334b609c84d9780'
+export WANDB_DIR='/projects/0/prjs0951/Varun/Wandb'
+
+
+accelerate launch --multi_gpu --num_processes=2 train_gpt.py --dataset_name sevir --exp_name blockGPT_SEVIR30 --seed 0 --vqgan_type vqgan --pretrained_model_name_or_path /projects/0/prjs0951/Varun/Checkpoints/vqgan_sevir_7M_1024ckpt-267880.pt --config_name configs/GPT/config_blockGPT_SEVIR30.json --per_device_train_batch_size 4 --gradient_accumulation_steps 1 --learning_rate 0.2e-5 --lr_scheduler_type cosine --resolution 128 --dataloader_num_workers 8 --video_stepsize 1 --segment_length 9 --context_length 3 --temp_res_sevir 30 --segment_length_sevir 49 --use_eval_dataset --weight_decay 0.01 --llama_attn_drop 0.1 --embed_no_wd --predictor_name blockGPT --encoder_config configs/Encoders/config_vqgan.json --validation_steps 500
+
+# single GPU training on Quechua:
+#accelerate launch train_gpt.py --dataset_name sevir --exp_name blockGPT_SEVIR30 --seed 0 --vqgan_type vqgan --pretrained_model_name_or_path /space2/vsarathchandra/iVideoGPT/Checkpoints/vqgan_sevir_7M_1024ckpt-267880.pt --config_name configs/GPT/config_blockGPT_SEVIR30.json --per_device_train_batch_size 4 --gradient_accumulation_steps 1 --learning_rate 0.2e-5 --lr_scheduler_type cosine --resolution 128 --dataloader_num_workers 8 --video_stepsize 1 --segment_length 9 --context_length 3 --temp_res_sevir 30 --segment_length_sevir 49 --use_eval_dataset --weight_decay 0.01 --llama_attn_drop 0.1 --embed_no_wd --predictor_name blockGPT --encoder_config configs/Encoders/config_vqgan.json --validation_steps 500

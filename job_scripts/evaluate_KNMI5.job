@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+# TODO: Evaluation has only been performed on Quechua. Please adjust the config to request more CPU memory. 
+
+#SBATCH -J WeatherForcasting_eval_KNMI5
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=18
+#SBATCH --partition=gpu_a100
+#SBATCH --time=3-00:00:00
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --mail-user=V.Sarathchandran@student.tudelft.nl
+#SBATCH --output=/projects/0/prjs0951/Varun/evalKNMI5_%j.out
+
+## Explanation about SLURM parameters
+# -J job-name
+# -t time D-HH:MM:SS
+# -p partition
+# -n number of nodes
+# --ntasks-per-node=n
+# --cpus-per-task=n
+# --mem=memory
+# --gpus number of gpus
+# --mail-type=type
+# --mail-user=user
+
+
+
+python evaluate.py  --dataset_name 'knmi_5mins' --segment_length 25 --context_length 5 --eval_checkpoints "configs/Evaluations/evaluate_config_KNMI5.yaml" --time_resolution 5

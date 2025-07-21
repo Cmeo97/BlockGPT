@@ -1,0 +1,60 @@
+vqgan:
+  config: configs/Encoders/config_vqgan.json
+  checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/vqgan_sevir_7M_1024ckpt-267880.pt
+
+blockGPT_models:
+  - name: blockGPT_seed1
+    config: configs/GPT/config_blockGPT_SEVIR30.json 
+    checkpoint:  /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_SEVIR30_seed1.safetensors
+    vqgan_type: vqgan
+  - name: blockGPT_seed2
+    config: configs/GPT/config_blockGPT_SEVIR30.json 
+    checkpoint:  /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_SEVIR30_seed2.safetensors
+    vqgan_type: vqgan
+  - name: blockGPT_seed3
+    config: configs/GPT/config_blockGPT_SEVIR30.json 
+    checkpoint:  /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_SEVIR30_seed3.safetensors
+    vqgan_type: vqgan
+
+    #Nowcasting
+  - name: nowcastingGPT_seed1
+    config: configs/GPT/config_nowcasting_SEVIR30.json
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_SEVIR30_seed1.safetensors
+    vqgan_type: vqgan
+  - name: nowcastingGPT_seed2
+    config: configs/GPT/config_nowcasting_SEVIR30.json
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_SEVIR30_seed2.safetensors
+    vqgan_type: vqgan
+  - name: nowcastingGPT_seed3
+    config: configs/GPT/config_nowcasting_SEVIR30.json
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_SEVIR30_seed3.safetensors
+    vqgan_type: vqgan
+
+diffcast_models:
+  - name: diffcast_phydnet_seed1
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_SEVIR30_seed1.pt
+    use_BlockGPT: false
+  - name: diffcast_phydnet_seed2
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_SEVIR30_seed2.pt
+    use_BlockGPT: false
+  - name: diffcast_phydnet_seed3
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_SEVIR30_seed3.pt
+    use_BlockGPT: false
+
+  - name: diffcast_blockgpt_seed1
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_blockGPT_SEVIR30_seed1.pt
+    config_path: /space2/vsarathchandra/blockGPT/configs/config_blockGPTBackbone_SEVIR30.json
+    use_BlockGPT: true
+  - name: diffcast_blockgpt_seed2
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_blockGPT_SEVIR30_seed2.pt
+    config_path: /space2/vsarathchandra/blockGPT/configs/config_blockGPTBackbone_SEVIR30.json
+    use_BlockGPT: true
+  - name: diffcast_blockgpt_seed2
+    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_blockGPT_SEVIR30_seed2.pt
+    config_path: /space2/vsarathchandra/blockGPT/configs/config_blockGPTBackbone_SEVIR30.json
+    use_BlockGPT: true
+
+
+kwargs:
+   in_shape: [1, 128, 128]
+#python evaluate.py --debug --dataset_name 'sevir' --segment_length 9 --context_length 3 --eval_FinalCheckpoints "evaluate_config_SEVIR30.yaml" --time_resolution 30 --seq_len_sevir 49

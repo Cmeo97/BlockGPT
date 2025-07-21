@@ -1,0 +1,30 @@
+{
+    "params": {
+        "embed_dim": 256,
+        "n_embed":1024,
+        "ddconfig": {
+            "double_z": false,
+            "z_channels": 128,
+            "resolution": 128,
+            "in_channels": 1,
+            "out_ch": 1,
+            "ch":16,
+            "ch_mult": [1, 1, 2, 2, 4],
+            "num_res_blocks": 2,
+            "attn_resolutions": [8],
+            "dropout": 0.2
+        },
+        "lossconfig" :{
+        "params":{
+        "disc_conditional": false,
+    "disc_in_channels": 1,
+        "disc_start": 20000,
+        "disc_weight": 0,
+        "codebook_weight": 1.0,
+        "perceptual_weight": 1.0
+
+        }  },
+        "perturb":true         
+
+    }
+    }
