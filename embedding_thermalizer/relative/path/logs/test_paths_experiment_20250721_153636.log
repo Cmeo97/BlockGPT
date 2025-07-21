@@ -1,0 +1,9 @@
+2025-07-21 15:36:36,987 - utils.logging_utils - INFO - TensorBoard initialized: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:36:36,988 - utils.logging_utils - INFO - Initialized logger for experiment: test_paths_experiment
+2025-07-21 15:36:36,988 - utils.logging_utils - INFO - System info: {'python_version': '3.9.21 | packaged by conda-forge | (main, Dec  5 2024, 13:51:40) \n[GCC 13.3.0]', 'pytorch_version': '2.2.1+cu121', 'cuda_available': True, 'device_count': 2, 'cuda_version': '12.1', 'gpu_name': 'NVIDIA A100-SXM4-40GB'}
+2025-07-21 15:36:36,989 - utils.logging_utils - INFO - Step 0 - train/loss: 2.000000, train/accuracy: 0.700000
+2025-07-21 15:36:36,989 - utils.logging_utils - INFO - Step 1 - train/loss: 1.800000, train/accuracy: 0.750000
+2025-07-21 15:36:37,887 - utils.logging_utils - INFO - Loss curves saved: relative/path/logs/plots/test_paths_experiment/test_paths_experiment_losses.png
+2025-07-21 15:36:38,047 - utils.logging_utils - INFO - TensorBoard writer closed
+2025-07-21 15:36:38,047 - utils.logging_utils - INFO - Experiment test_paths_experiment completed
+2025-07-21 15:36:38,047 - utils.logging_utils - INFO - Results saved to: /scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/custom_results

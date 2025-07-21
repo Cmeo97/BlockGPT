@@ -1,0 +1,27 @@
+{
+  "experiment_name": "test_paths_experiment",
+  "seed": 42,
+  "logging": {
+    "use_wandb": false,
+    "use_tensorboard": true,
+    "project": "test_project",
+    "log_dir": "relative/path/logs",
+    "save_dir": "relative/path/checkpoints",
+    "results_dir": "/tmp/embedding_thermalizer_test_ybuyy2zv/custom_results",
+    "log_level": "INFO"
+  },
+  "paths": {
+    "data_dir": "/tmp/embedding_thermalizer_test_ybuyy2zv/data",
+    "embeddings_dir": "/tmp/embedding_thermalizer_test_ybuyy2zv/data/embeddings",
+    "models_dir": "/tmp/embedding_thermalizer_test_ybuyy2zv/models",
+    "plots_dir": "/tmp/embedding_thermalizer_test_ybuyy2zv/plots",
+    "videos_dir": "/tmp/embedding_thermalizer_test_ybuyy2zv/videos",
+    "metrics_dir": "/tmp/embedding_thermalizer_test_ybuyy2zv/metrics"
+  },
+  "embedding_extraction": {
+    "save_path": "/tmp/embedding_thermalizer_test_ybuyy2zv/data/embeddings"
+  },
+  "evaluation": {
+    "output_dir": "/tmp/embedding_thermalizer_test_ybuyy2zv/evaluation"
+  }
+}

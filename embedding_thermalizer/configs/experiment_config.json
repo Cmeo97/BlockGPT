@@ -1,0 +1,112 @@
+{
+    "experiment_name": "embedding_thermalizer_sevir",
+    "seed": 42,
+    
+    "pretrained_models": {
+        "gpt_config": "/home/cmeo/Cristian/models/WeatherForecast/ChroneCast/configs/GPT/config_blockGPT_SEVIR30.json",
+        "gpt_checkpoint": "/projects/0/prjs0951/Varun/FinalCheckpoints/blockGPT_SEVIR30_seed2.safetensors",
+        "tokenizer_config": "/home/cmeo/Cristian/models/WeatherForecast/ChroneCast/configs/Encoders/config_vqgan.json",
+        "tokenizer_checkpoint": "/projects/0/prjs0951/Varun/FinalCheckpoints/vqgan_sevir_7M_1024ckpt-267880.pt",
+        "vqgan_type": "vqgan"
+    },
+    
+    "data": {
+        "dataset_name": "sevir",
+        "resolution": 128,
+        "segment_length": 25,
+        "context_length": 1,
+        "batch_size": 32,
+        "num_workers": 4,
+        "debug": false
+    },
+    
+    "embedding_extraction": {
+        "num_clean_samples": 10000,
+        "num_drift_samples": 5000,
+        "max_generation_steps": 50,
+        "corruption_methods": ["gaussian_noise", "autoregressive_drift", "distribution_shift"],
+        "noise_levels": [0, 10, 20, 50, 100, 200, 500, 1000],
+        "save_path": "/projects/0/prjs0951/Varun/data/embeddings"
+    },
+    
+    "thermalizer": {
+        "noise_threshold": 0,
+        "thermalize_interval": 1,
+        "thermalize_delay": 1,
+        "denoising_steps": 100,
+        "target_noise_level": 4,
+        "use_forward_diffusion": true
+    },
+    
+    "noise_classifier": {
+        "architecture": "EmbeddingMLP",
+        "embed_dim": 256,
+        "hidden_dims": [512, 256, 128],
+        "dropout": 0.1,
+        "activation": "relu"
+    },
+    
+    "diffusion_model": {
+        "architecture": "EmbeddingDiffusion",
+        "embed_dim": 256,
+        "model_channels": 128,
+        "num_res_blocks": 2,
+        "timesteps": 1000,
+        "noise_schedule": "cosine"
+    },
+    
+    "training": {
+        "classifier": {
+            "epochs": 100,
+            "learning_rate": 1e-4,
+            "weight_decay": 1e-5,
+            "batch_size": 128,
+            "grad_clip": 1.0,
+            "train_split": 0.8,
+            "val_split": 0.2
+        },
+        "diffusion": {
+            "epochs": 200,
+            "learning_rate": 1e-4,
+            "weight_decay": 1e-5,
+            "batch_size": 64,
+            "grad_clip": 1.0,
+            "ema_decay": 0.995,
+            "train_split": 0.9,
+            "val_split": 0.1
+        },
+        "log_interval": 100,
+        "save_interval": 5000,
+        "validation_interval": 1000
+    },
+    
+    "evaluation": {
+        "num_sequences": 100,
+        "sequence_length": 50,
+        "batch_size": 16,
+        "metrics": ["mse", "psnr", "ssim", "fid"],
+        "save_videos": true,
+        "comparison_mode": true,
+        "output_dir": "/projects/0/prjs0951/Varun/Results/Evaluations"
+    },
+    
+    "logging": {
+        "use_wandb": false,
+        "use_tensorboard": true,
+        "project": "embedding_thermalizer",
+        "entity": "your_entity",
+        "log_dir": "/projects/0/prjs0951/Varun/logs",
+        "save_dir": "/projects/0/prjs0951/Varun/checkpoints",
+        "results_dir": "/projects/0/prjs0951/Varun/Results",
+        "log_level": "INFO"
+    },
+    
+    "paths": {
+        "data_dir": "/projects/0/prjs0951/Varun/data",
+        "embeddings_dir": "/projects/0/prjs0951/Varun/data/embeddings",
+        "models_dir": "/projects/0/prjs0951/Varun/models",
+        "plots_dir": "/projects/0/prjs0951/Varun/plots",
+        "videos_dir": "/projects/0/prjs0951/Varun/Results/videos",
+        "metrics_dir": "/projects/0/prjs0951/Varun/Results/metrics"
+    }
+} 

@@ -1,0 +1,31 @@
+2025-07-21 15:27:51,370 - utils.logging_utils - INFO - TensorBoard initialized: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:27:51,371 - utils.logging_utils - INFO - Initialized logger for experiment: test_paths_experiment
+2025-07-21 15:27:51,371 - utils.logging_utils - INFO - System info: {'python_version': '3.9.21 | packaged by conda-forge | (main, Dec  5 2024, 13:51:40) \n[GCC 13.3.0]', 'pytorch_version': '2.2.1+cu121', 'cuda_available': True, 'device_count': 2, 'cuda_version': '12.1', 'gpu_name': 'NVIDIA A100-SXM4-40GB'}
+2025-07-21 15:27:51,372 - utils.logging_utils - INFO - Created directories:
+2025-07-21 15:27:51,372 - utils.logging_utils - INFO -   - Log dir: relative/path/logs
+2025-07-21 15:27:51,372 - utils.logging_utils - INFO -   - Save dir: relative/path/checkpoints
+2025-07-21 15:27:51,372 - utils.logging_utils - INFO -   - TensorBoard dir: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:27:51,372 - utils.logging_utils - INFO -   - Results dir: /scratch-local/cmeo.13236178/embedding_thermalizer_test_raybw0ac/custom_results
+2025-07-21 15:27:51,374 - utils.logging_utils - INFO - TensorBoard initialized: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:27:51,375 - utils.logging_utils - INFO - Initialized logger for experiment: test_paths_experiment
+2025-07-21 15:27:51,375 - utils.logging_utils - INFO - System info: {'python_version': '3.9.21 | packaged by conda-forge | (main, Dec  5 2024, 13:51:40) \n[GCC 13.3.0]', 'pytorch_version': '2.2.1+cu121', 'cuda_available': True, 'device_count': 2, 'cuda_version': '12.1', 'gpu_name': 'NVIDIA A100-SXM4-40GB'}
+2025-07-21 15:27:51,375 - utils.logging_utils - INFO - Step 0 - train/loss: 2.000000, val/loss: 2.200000, train/noise_accuracy: 0.500000
+2025-07-21 15:27:51,376 - utils.logging_utils - INFO - Step 1 - train/loss: 1.900000, val/loss: 2.120000, train/noise_accuracy: 0.550000
+2025-07-21 15:27:51,376 - utils.logging_utils - INFO - Step 2 - train/loss: 1.800000, val/loss: 2.040000, train/noise_accuracy: 0.600000
+2025-07-21 15:27:51,376 - utils.logging_utils - INFO - Step 3 - train/loss: 1.700000, val/loss: 1.960000, train/noise_accuracy: 0.650000
+2025-07-21 15:27:51,376 - utils.logging_utils - INFO - Step 4 - train/loss: 1.600000, val/loss: 1.880000, train/noise_accuracy: 0.700000
+2025-07-21 15:27:51,377 - utils.logging_utils - INFO - Step 5 - train/loss: 1.500000, val/loss: 1.800000, train/noise_accuracy: 0.750000
+2025-07-21 15:27:51,377 - utils.logging_utils - INFO - Step 6 - train/loss: 1.400000, val/loss: 1.720000, train/noise_accuracy: 0.800000
+2025-07-21 15:27:51,377 - utils.logging_utils - INFO - Step 7 - train/loss: 1.300000, val/loss: 1.640000, train/noise_accuracy: 0.850000
+2025-07-21 15:27:51,377 - utils.logging_utils - INFO - Step 8 - train/loss: 1.200000, val/loss: 1.560000, train/noise_accuracy: 0.900000
+2025-07-21 15:27:51,377 - utils.logging_utils - INFO - Step 9 - train/loss: 1.100000, val/loss: 1.480000, train/noise_accuracy: 0.950000
+2025-07-21 15:27:52,371 - utils.logging_utils - INFO - Loss curves saved: relative/path/logs/plots/test_paths_experiment/test_paths_experiment_losses.png
+2025-07-21 15:27:53,753 - utils.logging_utils - INFO - Loss curves saved: relative/path/logs/plots/test_paths_experiment/test_paths_experiment_losses.png
+2025-07-21 15:27:53,930 - utils.logging_utils - INFO - TensorBoard writer closed
+2025-07-21 15:27:53,930 - utils.logging_utils - INFO - Experiment test_paths_experiment completed
+2025-07-21 15:27:53,930 - utils.logging_utils - INFO - Results saved to: /scratch-local/cmeo.13236178/embedding_thermalizer_test_raybw0ac/custom_results
+2025-07-21 15:27:53,931 - utils.logging_utils - INFO - Created directories:
+2025-07-21 15:27:53,931 - utils.logging_utils - INFO -   - Log dir: relative/path/logs
+2025-07-21 15:27:53,931 - utils.logging_utils - INFO -   - Save dir: relative/path/checkpoints
+2025-07-21 15:27:53,931 - utils.logging_utils - INFO -   - TensorBoard dir: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:27:53,931 - utils.logging_utils - INFO -   - Results dir: /scratch-local/cmeo.13236178/embedding_thermalizer_test_raybw0ac/custom_results

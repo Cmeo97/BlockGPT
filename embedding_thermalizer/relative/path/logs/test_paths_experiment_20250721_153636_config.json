@@ -1,0 +1,27 @@
+{
+  "experiment_name": "test_paths_experiment",
+  "seed": 42,
+  "logging": {
+    "use_wandb": false,
+    "use_tensorboard": true,
+    "project": "test_project",
+    "log_dir": "relative/path/logs",
+    "save_dir": "relative/path/checkpoints",
+    "results_dir": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/custom_results",
+    "log_level": "INFO"
+  },
+  "paths": {
+    "data_dir": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/data",
+    "embeddings_dir": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/data/embeddings",
+    "models_dir": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/models",
+    "plots_dir": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/plots",
+    "videos_dir": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/videos",
+    "metrics_dir": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/metrics"
+  },
+  "embedding_extraction": {
+    "save_path": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/data/embeddings"
+  },
+  "evaluation": {
+    "output_dir": "/scratch-local/cmeo.13236178/embedding_thermalizer_test_z3caighx/evaluation"
+  }
+}

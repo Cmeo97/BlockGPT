@@ -1,0 +1,12 @@
+2025-07-21 15:47:07,139 - embedding_thermalizer.test_paths_experiment - INFO - TensorBoard initialized: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:47:07,139 - embedding_thermalizer.test_paths_experiment - INFO - Initialized logger for experiment: test_paths_experiment
+2025-07-21 15:47:07,140 - embedding_thermalizer.test_paths_experiment - INFO - Created directories:
+2025-07-21 15:47:07,140 - embedding_thermalizer.test_paths_experiment - INFO -   - log_dir: relative/path/logs
+2025-07-21 15:47:07,140 - embedding_thermalizer.test_paths_experiment - INFO -   - save_dir: relative/path/checkpoints
+2025-07-21 15:47:07,140 - embedding_thermalizer.test_paths_experiment - INFO -   - tensorboard_dir: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:47:07,140 - embedding_thermalizer.test_paths_experiment - INFO -   - results_dir: /tmp/embedding_thermalizer_test_o80bnovo/custom_results
+2025-07-21 15:47:07,140 - embedding_thermalizer.test_paths_experiment - INFO - System info: {'python_version': '3.9.21 | packaged by conda-forge | (main, Dec  5 2024, 13:51:40) \n[GCC 13.3.0]', 'pytorch_version': '2.2.1+cu121', 'cuda_available': True, 'device_count': 2, 'cuda_version': '12.1', 'gpu_name': 'NVIDIA A100-SXM4-40GB'}
+2025-07-21 15:47:08,105 - embedding_thermalizer.test_paths_experiment - INFO - Loss curves saved: relative/path/logs/plots/test_paths_experiment/test_paths_experiment_losses.png
+2025-07-21 15:47:08,240 - embedding_thermalizer.test_paths_experiment - INFO - TensorBoard writer closed
+2025-07-21 15:47:08,240 - embedding_thermalizer.test_paths_experiment - INFO - Experiment test_paths_experiment completed
+2025-07-21 15:47:08,240 - embedding_thermalizer.test_paths_experiment - INFO - Results saved to: /tmp/embedding_thermalizer_test_o80bnovo/custom_results

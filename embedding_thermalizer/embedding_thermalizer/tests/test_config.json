@@ -1,0 +1,32 @@
+{
+  "experiment_name": "test_pipeline",
+  "seed": 42,
+  "pretrained_models": {
+    "gpt_config": "configs/GPT/config_blockGPT_KNMI30.json",
+    "gpt_checkpoint": null,
+    "tokenizer_config": "configs/Encoders/config_vqgan.json",
+    "tokenizer_checkpoint": null,
+    "vqgan_type": "vqgan"
+  },
+  "noise_classifier": {
+    "embed_dim": 256,
+    "hidden_dims": [
+      512,
+      256,
+      128
+    ],
+    "dropout": 0.1
+  },
+  "diffusion_model": {
+    "embed_dim": 256,
+    "model_channels": 128,
+    "timesteps": 100
+  },
+  "logging": {
+    "use_wandb": false,
+    "use_tensorboard": false,
+    "log_dir": "embedding_thermalizer/tests/logs",
+    "save_dir": "embedding_thermalizer/tests/checkpoints",
+    "results_dir": "embedding_thermalizer/tests/results"
+  }
+}

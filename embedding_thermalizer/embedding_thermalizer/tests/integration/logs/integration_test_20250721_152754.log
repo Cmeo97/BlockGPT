@@ -1,0 +1,9 @@
+2025-07-21 15:27:54,989 - utils.logging_utils - INFO - Initialized logger for experiment: integration_test
+2025-07-21 15:27:54,989 - utils.logging_utils - INFO - System info: {'python_version': '3.9.21 | packaged by conda-forge | (main, Dec  5 2024, 13:51:40) \n[GCC 13.3.0]', 'pytorch_version': '2.2.1+cu121', 'cuda_available': True, 'device_count': 2, 'cuda_version': '12.1', 'gpu_name': 'NVIDIA A100-SXM4-40GB'}
+2025-07-21 15:27:54,991 - utils.embedding_utils - INFO - Initialized EmbeddingConverter for vqgan
+2025-07-21 15:27:54,991 - utils.logging_utils - INFO - Step 0 - test_loss: 1.500000, test_accuracy: 0.800000
+2025-07-21 15:27:54,992 - utils.logging_utils - INFO - Step 1 - test_loss: 1.200000, test_accuracy: 0.850000
+2025-07-21 15:27:54,993 - utils.logging_utils - INFO - Checkpoint saved: embedding_thermalizer/tests/integration/checkpoints/integration_test_checkpoint_step_10.pt
+2025-07-21 15:27:55,731 - utils.logging_utils - INFO - Loss curves saved: embedding_thermalizer/tests/integration/logs/plots/integration_test/integration_test_losses.png
+2025-07-21 15:27:55,732 - utils.logging_utils - INFO - Experiment integration_test completed
+2025-07-21 15:27:55,732 - utils.logging_utils - INFO - Results saved to: embedding_thermalizer/tests/integration/results

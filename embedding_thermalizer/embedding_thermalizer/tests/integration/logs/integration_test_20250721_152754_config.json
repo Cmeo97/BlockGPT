@@ -1,0 +1,10 @@
+{
+  "experiment_name": "integration_test",
+  "logging": {
+    "use_wandb": false,
+    "use_tensorboard": false,
+    "log_dir": "embedding_thermalizer/tests/integration/logs",
+    "save_dir": "embedding_thermalizer/tests/integration/checkpoints",
+    "results_dir": "embedding_thermalizer/tests/integration/results"
+  }
+}

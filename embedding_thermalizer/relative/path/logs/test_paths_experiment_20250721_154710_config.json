@@ -1,0 +1,27 @@
+{
+  "experiment_name": "test_paths_experiment",
+  "seed": 42,
+  "logging": {
+    "use_wandb": false,
+    "use_tensorboard": true,
+    "project": "test_project",
+    "log_dir": "relative/path/logs",
+    "save_dir": "relative/path/checkpoints",
+    "results_dir": "/tmp/embedding_thermalizer_test_o80bnovo/custom_results",
+    "log_level": "INFO"
+  },
+  "paths": {
+    "data_dir": "/tmp/embedding_thermalizer_test_o80bnovo/data",
+    "embeddings_dir": "/tmp/embedding_thermalizer_test_o80bnovo/data/embeddings",
+    "models_dir": "/tmp/embedding_thermalizer_test_o80bnovo/models",
+    "plots_dir": "/tmp/embedding_thermalizer_test_o80bnovo/plots",
+    "videos_dir": "/tmp/embedding_thermalizer_test_o80bnovo/videos",
+    "metrics_dir": "/tmp/embedding_thermalizer_test_o80bnovo/metrics"
+  },
+  "embedding_extraction": {
+    "save_path": "/tmp/embedding_thermalizer_test_o80bnovo/data/embeddings"
+  },
+  "evaluation": {
+    "output_dir": "/tmp/embedding_thermalizer_test_o80bnovo/evaluation"
+  }
+}

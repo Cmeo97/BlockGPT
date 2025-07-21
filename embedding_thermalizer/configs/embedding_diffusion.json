@@ -1,0 +1,48 @@
+{
+    "model_type": "EmbeddingDiffusion",
+    "input_channels": 256,
+    "output_channels": 256,
+    "embed_dim": 256,
+    "model_channels": 128,
+    "num_res_blocks": 2,
+    "attention_resolutions": [],
+    "dropout": 0.1,
+    "channel_mult": [1, 2, 2],
+    "num_heads": 4,
+    "num_head_channels": 32,
+    
+    "diffusion": {
+        "timesteps": 1000,
+        "noise_schedule": "cosine",
+        "beta_start": 0.0001,
+        "beta_end": 0.02,
+        "time_embedding_dim": 512
+    },
+    
+    "training": {
+        "epochs": 200,
+        "batch_size": 64,
+        "learning_rate": 1e-4,
+        "weight_decay": 1e-5,
+        "ema_decay": 0.995,
+        "scheduler": {
+            "type": "CosineAnnealingLR",
+            "T_max": 200
+        },
+        "gradient_clipping": 1.0
+    },
+    
+    "data": {
+        "clean_embeddings_path": "/projects/0/prjs0951/Varun/data/embeddings/clean_embeddings.pt",
+        "train_split": 0.9,
+        "val_split": 0.1
+    },
+    
+    "logging": {
+        "log_interval": 100,
+        "save_interval": 5000,
+        "validation_interval": 1000,
+        "sample_interval": 2000,
+        "num_samples": 16
+    }
+} 

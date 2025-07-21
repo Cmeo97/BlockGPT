@@ -1,0 +1,23 @@
+2025-07-21 15:47:08,242 - embedding_thermalizer.test_paths_experiment - INFO - TensorBoard initialized: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:47:08,242 - embedding_thermalizer.test_paths_experiment - INFO - Initialized logger for experiment: test_paths_experiment
+2025-07-21 15:47:08,243 - embedding_thermalizer.test_paths_experiment - INFO - Created directories:
+2025-07-21 15:47:08,243 - embedding_thermalizer.test_paths_experiment - INFO -   - log_dir: relative/path/logs
+2025-07-21 15:47:08,243 - embedding_thermalizer.test_paths_experiment - INFO -   - save_dir: relative/path/checkpoints
+2025-07-21 15:47:08,243 - embedding_thermalizer.test_paths_experiment - INFO -   - tensorboard_dir: relative/path/logs/tensorboard/test_paths_experiment
+2025-07-21 15:47:08,243 - embedding_thermalizer.test_paths_experiment - INFO -   - results_dir: /tmp/embedding_thermalizer_test_o80bnovo/custom_results
+2025-07-21 15:47:08,243 - embedding_thermalizer.test_paths_experiment - INFO - System info: {'python_version': '3.9.21 | packaged by conda-forge | (main, Dec  5 2024, 13:51:40) \n[GCC 13.3.0]', 'pytorch_version': '2.2.1+cu121', 'cuda_available': True, 'device_count': 2, 'cuda_version': '12.1', 'gpu_name': 'NVIDIA A100-SXM4-40GB'}
+2025-07-21 15:47:08,243 - embedding_thermalizer.test_paths_experiment - INFO - Step 0 - train/loss: 2.000000, val/loss: 2.200000, train/noise_accuracy: 0.500000
+2025-07-21 15:47:08,244 - embedding_thermalizer.test_paths_experiment - INFO - Step 1 - train/loss: 1.900000, val/loss: 2.120000, train/noise_accuracy: 0.550000
+2025-07-21 15:47:08,244 - embedding_thermalizer.test_paths_experiment - INFO - Step 2 - train/loss: 1.800000, val/loss: 2.040000, train/noise_accuracy: 0.600000
+2025-07-21 15:47:08,244 - embedding_thermalizer.test_paths_experiment - INFO - Step 3 - train/loss: 1.700000, val/loss: 1.960000, train/noise_accuracy: 0.650000
+2025-07-21 15:47:08,244 - embedding_thermalizer.test_paths_experiment - INFO - Step 4 - train/loss: 1.600000, val/loss: 1.880000, train/noise_accuracy: 0.700000
+2025-07-21 15:47:08,244 - embedding_thermalizer.test_paths_experiment - INFO - Step 5 - train/loss: 1.500000, val/loss: 1.800000, train/noise_accuracy: 0.750000
+2025-07-21 15:47:08,245 - embedding_thermalizer.test_paths_experiment - INFO - Step 6 - train/loss: 1.400000, val/loss: 1.720000, train/noise_accuracy: 0.800000
+2025-07-21 15:47:08,245 - embedding_thermalizer.test_paths_experiment - INFO - Step 7 - train/loss: 1.300000, val/loss: 1.640000, train/noise_accuracy: 0.850000
+2025-07-21 15:47:08,245 - embedding_thermalizer.test_paths_experiment - INFO - Step 8 - train/loss: 1.200000, val/loss: 1.560000, train/noise_accuracy: 0.900000
+2025-07-21 15:47:08,245 - embedding_thermalizer.test_paths_experiment - INFO - Step 9 - train/loss: 1.100000, val/loss: 1.480000, train/noise_accuracy: 0.950000
+2025-07-21 15:47:09,247 - embedding_thermalizer.test_paths_experiment - INFO - Loss curves saved: relative/path/logs/plots/test_paths_experiment/test_paths_experiment_losses.png
+2025-07-21 15:47:10,434 - embedding_thermalizer.test_paths_experiment - INFO - Loss curves saved: relative/path/logs/plots/test_paths_experiment/test_paths_experiment_losses.png
+2025-07-21 15:47:10,616 - embedding_thermalizer.test_paths_experiment - INFO - TensorBoard writer closed
+2025-07-21 15:47:10,616 - embedding_thermalizer.test_paths_experiment - INFO - Experiment test_paths_experiment completed
+2025-07-21 15:47:10,616 - embedding_thermalizer.test_paths_experiment - INFO - Results saved to: /tmp/embedding_thermalizer_test_o80bnovo/custom_results
