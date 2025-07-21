@@ -33,7 +33,7 @@ def parse_args():
     
     
     parser.add_argument('--n_tokens', type=int,default=64, required=False,help="number of tokens per frame defined in the encoder")
-    
+    parser.add_argument('--output_dir', type=str, required=True,help="output directory")
     # datasets
     parser.add_argument("--segment_length", type=int, default=9,
                         help="The length of the segmented trajectories to use for the training.")
@@ -847,7 +847,7 @@ def main():
        thresholds = [16, 74, 133, 160, 181, 219]
     else:
          raise ValueError("Unsupported dataset name. Use 'knmi', 'knmi_5mins', or 'sevir'.")
-    output_folder = "Results/Evaluations" 
+    output_folder = args.output_dir
     output_folder = os.path.join(output_folder, args.dataset_name)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     output_folder = f"{output_folder}_{timestamp}"
@@ -860,7 +860,7 @@ def main():
     stored_events = store_all_events(eval_dataloader,categorized_indices,args.batch_size)
  
 
-    output_folder = "Results/Evaluations" 
+    output_folder = args.output_dir
     output_folder = os.path.join(output_folder, args.dataset_name)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     output_folder = f"{output_folder}_{timestamp}"

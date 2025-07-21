@@ -59,7 +59,7 @@ def create_parser():
     parser.add_argument('--backbone_config',     type=str,   default=None,           help='path to backbone config file, needed only for BlockGPT')
     
     parser.add_argument("--seed",           type=int,   default=0,              help='Experiment seed')
-    parser.add_argument("--exp_dir",        type=str,   default='Outputs/',   help="experiment directory")
+    parser.add_argument("--exp_dir",        type=str,   require=True,   help="experiment directory")
     
 
     parser.add_argument("--debug",          type=bool,  default=False,           help="load a small dataset for debugging")
