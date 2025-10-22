@@ -11,7 +11,9 @@ BlockGPT is a spatio-temporal generative model designed for precipitation nowcas
 ## Model Architecture
 BlockGPT is a two-stage, frame-level autoregressive model for precipitation nowcasting. Each 128×128 radar frame is tokenized by a VQ-GAN into an 8×8 grid (64 tokens) from a 1,024-entry codebook, preserving 2D structure while compressing space. A Transformer then predicts the entire next latent frame conditioned on past frames using a block attention mask: bidirectional attention within a frame (spatial coherence) and strictly causal attention across frames (temporal order). The model uses 8 layers, 8 heads, 1,024-dim embeddings, and ~103M parameters, trained for 500k steps (batch 8). This frame-level factorization removes arbitrary token ordering and yields around **27–31 times faster inference with improved skill**.
 ![](./figs/model_arch.png)
+
 ## Qualitative Results
+> For more experimental results, please refer to our [paper](https://arxiv.org/abs/2510.06293)!
 ### SEVIR30 Dataset
 BlockGPT (second row) best maintains structure and motion; a tendency to overestimate peak intensity emerges at longer lead times.
 ![](./figs/SEVIR30_showcase.png)
