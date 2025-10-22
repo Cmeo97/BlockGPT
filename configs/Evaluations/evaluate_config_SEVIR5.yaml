@@ -1,50 +1,50 @@
 vqgan:
   config: configs/Encoders/config_vqgan.json
-  checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/vqgan_sevir_7M_1024ckpt-267880.pt
+  checkpoint: /projects/0/prjs0951/Varun/Checkpoints/vqgan_sevir_7M_1024ckpt-267880.pt
 
 blockGPT_models:
   - name: blockGPT_seed1
     config: configs/GPT/config_blockGPT_SEVIR5.json 
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_SEVIR5_seed1.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_SEVIR5_seed1.safetensors
     vqgan_type: vqgan
   - name: blockGPT_seed2
     config: configs/GPT/config_blockGPT_SEVIR5.json 
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_SEVIR5_seed2.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_SEVIR5_seed2.safetensors
     vqgan_type: vqgan
   - name: blockGPT_seed3
     config: configs/GPT/config_blockGPT_SEVIR5.json 
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_SEVIR5_seed3.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_SEVIR5_seed3.safetensors
     vqgan_type: vqgan
 
 # Nowcasting
   - name: nowcastingGPT_seed1
     config: configs/GPT/config_nowcasting_SEVIR5.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_SEVIR5_seed1.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/nowcastingGPT_SEVIR5_seed1.safetensors
     vqgan_type: vqgan
 
   - name: nowcastingGPT_seed2
     config: configs/GPT/config_nowcasting_SEVIR5.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_SEVIR5_seed2.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/nowcastingGPT_SEVIR5_seed2.safetensors
     vqgan_type: vqgan
 
   - name: nowcastingGPT_seed3
     config: configs/GPT/config_nowcasting_SEVIR5.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_SEVIR5_seed3.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/nowcastingGPT_SEVIR5_seed3.safetensors
     vqgan_type: vqgan
 
 diffcast_models:
   - name: diffcast_phydnet_seed1
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_SEVIR5_seed1.pt
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/diffcast_phydnet_SEVIR5_seed1.pt
     use_BlockGPT: false
   - name: diffcast_phydnet_seed2
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_SEVIR5_seed2.pt
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/diffcast_phydnet_SEVIR5_seed2.pt
     use_BlockGPT: false
   - name: diffcast_phydnet_seed3
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_SEVIR5_seed3.pt
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/diffcast_phydnet_SEVIR5_seed3.pt
     use_BlockGPT: false  
 
 
 
 kwargs:
    in_shape: [1, 128, 128]
-#python evaluate.py --debug --dataset_name 'sevir' --segment_length 25  --context_length 5 --eval_FinalCheckpoints "evaluate_config_SEVIR5.yaml" --time_resolution 5
+#python evaluate.py --debug --dataset_name 'sevir' --segment_length 25  --context_length 5 --eval_checkpoints "evaluate_config_SEVIR5.yaml" --time_resolution 5

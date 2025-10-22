@@ -87,7 +87,7 @@ class VQModel(nn.Module):
         if monitor is not None:
             self.monitor = monitor
         self.perturb= perturb
-        print("perturbation is ",self.perturb)
+       # print("perturbation is ",self.perturb)
     # def init_from_ckpt(self, path, ignore_keys=list()):
     #     sd = torch.load(path, map_location="cpu")["state_dict"]
     #     keys = list(sd.keys())
@@ -136,7 +136,7 @@ class VQModel(nn.Module):
         h = self.encode(input)
         quant, qloss, _ = self.quantize(h)
         if self.perturb:
-            print("perturbing the quantized output")
+          #  print("perturbing the quantized output")
             quant = add_perturbation(h, quant, self.quantize.e_dim, False, self.quantize.embedding, alpha, beta, delta)
         recons = self.decode(quant)
         loss,log_dict = self.compute_loss(qloss,input,recons,optimizer_idx,global_step,last_layer=self.get_last_layer(),split="train")
@@ -160,7 +160,7 @@ class VQModel(nn.Module):
             n_tokens is the number of tokens per frame in the embedded space. 
             """
         
-            print("special token",include_special_toks)
+           # print("special token",include_special_toks)
             n_embd = self.quantize.n_e
             B,T,C,H,W = x.shape
             x = x.reshape(B*T,C,H,W)
@@ -171,7 +171,7 @@ class VQModel(nn.Module):
             sf_token = n_embd 
             sf_tokens = torch.ones(B,T,1).to(indices.device,indices.dtype)*sf_token
             if include_special_toks:
-                print("entered special token block")
+              #  print("entered special token block")
                 if include_sos:
                     indices = torch.cat((sf_tokens,indices),dim=2).reshape(B,-1)
                     ctx_indices = ctx_len*n_tokens + ctx_len #3 probably now
@@ -187,14 +187,14 @@ class VQModel(nn.Module):
                                 indices[:, (n_tokens+(ctx_len-1)*(n_tokens+1)+1) :]], dim=1) #maybe 196 now?
                 
             else:
-                    print("entered no special token block")
+                  #  print("entered no special token block")
                     indices = indices.reshape(B,-1)
                     ctx_indices = ctx_len*n_tokens 
                     labels = torch.cat([
                                 torch.ones(B,ctx_indices).to(indices.device, indices.dtype) * -100,  # -100 for no loss
                                 indices[:, (n_tokens*ctx_len) :]], dim=1) 
-                    print("indices shape inside tokenizer", indices.shape)
-                    print("labels shape inside tokenizer", labels.shape)
+                  #  print("indices shape inside tokenizer", indices.shape)
+                  #  print("labels shape inside tokenizer", labels.shape)
 
             
             return indices,labels
@@ -215,8 +215,8 @@ class VQModel(nn.Module):
                     indices = indices[:,1:]
                 B = indices.shape[0]
                 T=tot_time_steps
-                print("indices shape", indices.shape)
-                print("future length",((indices.shape[1] + 1 - (1 + ctx_res * ctx_res) * context_length) // (1 + dyn_res * dyn_res)))
+              #  print("indices shape", indices.shape)
+              #  print("future length",((indices.shape[1] + 1 - (1 + ctx_res * ctx_res) * context_length) // (1 + dyn_res * dyn_res)))
                 # extract embeddings
                 assert (indices.shape[1] + 1 - (1 + ctx_res * ctx_res) * context_length) % (1 + dyn_res * dyn_res) == 0
                 future_length = (indices.shape[1] + 1 - (1 + ctx_res * ctx_res) * context_length) // (1 + dyn_res * dyn_res)
@@ -225,7 +225,7 @@ class VQModel(nn.Module):
 
                 indices = indices.view(B,T,-1)[:,:,1:]
                 indices = indices.clamp(min=0, max=self.quantize.n_e - 1)
-                print("largest index inside detokenize is ",torch.max(indices))
+               # print("largest index inside detokenize is ",torch.max(indices))
                 quant= self.quantize.embedding(indices.reshape(B,-1))
                 quant = quant.view(B*T,ctx_res,ctx_res,emb_dim).permute(0,3,1,2)
                 decode = self.decode(quant).view(B,T,-1,128,128)
@@ -233,13 +233,13 @@ class VQModel(nn.Module):
                                 
                 B = indices.shape[0]
                 T=tot_time_steps
-                print("indices shape", indices.shape)
-                print("future length",((indices.shape[1] - (ctx_res * ctx_res) * context_length) // (dyn_res * dyn_res)))
+              #  print("indices shape", indices.shape)
+               # print("future length",((indices.shape[1] - (ctx_res * ctx_res) * context_length) // (dyn_res * dyn_res)))
                 # extract embeddings
                 assert (indices.shape[1] - (ctx_res * ctx_res) * context_length) % (dyn_res * dyn_res) == 0
                 indices = indices.view(B,T,-1)
                 indices = indices.clamp(min=0, max=self.quantize.n_e - 1)
-                print("largest index inside detokenize is ",torch.max(indices))
+              #  print("largest index inside detokenize is ",torch.max(indices))
                 quant= self.quantize.embedding(indices.reshape(B,-1))
                 quant = quant.view(B*T,ctx_res,ctx_res,emb_dim).permute(0,3,1,2)
                 decode = self.decode(quant).view(B,T,-1,128,128)
@@ -472,8 +472,8 @@ class VQModelCond(nn.Module):
                 indices = indices[:,1:]
             B = indices.shape[0]
             T=tot_time_steps
-            print("indices shape", indices.shape)
-            print("future length",((indices.shape[1] + 1 - (1 + ctx_res * ctx_res) * context_length) // (1 + dyn_res * dyn_res)))
+            #print("indices shape", indices.shape)
+           # print("future length",((indices.shape[1] + 1 - (1 + ctx_res * ctx_res) * context_length) // (1 + dyn_res * dyn_res)))
             # extract embeddings
             assert (indices.shape[1] + 1 - (1 + ctx_res * ctx_res) * context_length) % (1 + dyn_res * dyn_res) == 0
             future_length = (indices.shape[1] + 1 - (1 + ctx_res * ctx_res) * context_length) // (1 + dyn_res * dyn_res)
@@ -481,7 +481,7 @@ class VQModelCond(nn.Module):
 
             indices = indices.view(B,T,-1)[:,:,1:]
             indices = indices.clamp(min=0, max=self.quantize.n_e - 1)
-            print("largest index inside detokenize is ",torch.max(indices))
+            #print("largest index inside detokenize is ",torch.max(indices))
             quant= self.quantize.embedding(indices.reshape(B,-1))
             quant = quant.view(B*T,ctx_res,ctx_res,emb_dim).permute(0,3,1,2)
             decode = self.decode(quant).view(B,T,-1,128,128)
@@ -856,8 +856,8 @@ def main():
     
 
     loss= model.compute_loss(qloss,dummy_input,recons,0,1,last_layer=model.get_last_layer(),split="train")
-    print(recons)
-    print(loss)
+    #print(recons)
+    #print(loss)
     # for name, param in model.named_parameters():
     #     print(f"Parameter: {name}")
     #     #print(param) 

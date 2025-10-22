@@ -153,19 +153,27 @@ Use `plot_metrics.ipynb` to load the `.pkl` files from `FinalPickledResults/` an
 
 ## 📚 Acknowledgements
 
-- [NowcastingGPT]
-- [DiffCast]
-- [PhyDNet]
+- [NowcastingGPT: Extreme Precipitation Nowcasting using Transformer-based Generative Models](https://arxiv.org/abs/2403.03929)
+- [DiffCast: A Unified Framework via Residual Diffusion for Precipitation Nowcasting](https://arxiv.org/abs/2312.06734)
+- [Disentangling Physical Dynamics from Unknown Factors for Unsupervised Video Prediction](https://arxiv.org/abs/2003.01460)
 
 ---
 
 ## 🔮 Citation
-
 *If you use BlockGPT in your research, please cite this repository (bibtex to be added after paper submission).*
-
-
-## Checkpoints 
+```bibtex
+@misc{meo2025blockgptspatiotemporalmodellingrainfall,
+title={BlockGPT: Spatio-Temporal Modelling of Rainfall via Frame-Level Autoregression}, 
+author={Cristian Meo and Varun Sarathchandran and Avijit Majhi and Shao Hung and Carlo Saccardi and Ruben Imhoff and Roberto Deidda and Remko Uijlenhoet and Justin Dauwels},
+year={2025},
+eprint={2510.06293},
+archivePrefix={arXiv},
+primaryClass={cs.LG},
+url={https://arxiv.org/abs/2510.06293}, 
+}
+```
+<!-- ## Checkpoints 
 
 Checkpoints for all models used in my thesis are both on snellius and quechua. 
 On snellius: /projects/0/prjs0951/Varun/FinalCheckpoints
-On quechua: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints
+On quechua: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints -->

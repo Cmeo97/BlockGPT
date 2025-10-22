@@ -29,7 +29,7 @@
 # TODO: chnage these lines according to your cluster's configuration
 module load 2023
 conda init
-source activate blockGPT
+source activate blockgpt
 export WANDB_API_KEY='241add8d0c5e60aee18d2a6c8334b609c84d9780'
 export WANDB_DIR='/projects/0/prjs0951/Varun/Wandb'
 

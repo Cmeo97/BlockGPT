@@ -1,10 +1,10 @@
 {
     "vqgan_type": "vqgan",
-    "vqgan_ckpt": "/space2/vsarathchandra/iVideoGPT/Checkpoints/vqgan_sevir_7M_1024ckpt-267880.pt",
+    "vqgan_ckpt": "/projects/0/prjs0951/Varun/Checkpoints/vqgan_sevir_7M_1024ckpt-267880.pt",
     "vqgan_config": "configs/Encoders/config_vqgan.json",
     "predictor_type": "blockGPT",
     "predictor_config": "configs/GPT/config_blockGPT_SEVIR30.json",
-    "predictor_ckpt": "/space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_SEVIR30_seed2.safetensors",
+    "predictor_ckpt": "/projects/0/prjs0951/Varun/FinalCheckpoints/blockGPT_SEVIR30_seed2.safetensors",
     "segment_length": 9,
     "context_length": 3,
     "n_tokens": 64,

@@ -89,10 +89,10 @@ def create_parser():
     parser.add_argument('--encoder',       type=str,   default='vqgan',           help='encoder model for deterministic prediction')
     parser.add_argument('--stochastic',     type=str,   default='diffusion',           help='diffusion model for stochastic prediction')
     parser.add_argument('--use_diff',       action="store_true", default=False,        help='Weather use diff framework, as for ablation study')
-    parser.add_argument('--encoder_config',     type=str,   default='configs/Encoders/config_vqgan.json',           help='path to encoder config file')
+    parser.add_argument('--encoder_config',     type=str,   default='configs/Encoders/config_vqgan.json',           help='diffusion model for stochastic prediction')
     
     parser.add_argument("--seed",           type=int,   default=0,              help='Experiment seed')
-    parser.add_argument("--exp_dir",        type=str,   default='Outputs/',   help="experiment directory")
+    parser.add_argument("--exp_dir",        type=str,   default='/projects/0/prjs0951/Varun/Outputs',   help="experiment directory")
     parser.add_argument("--exp_note",       type=str,   default="phydnet",           help="additional note for experiment")
 
     parser.add_argument("--debug",          type=bool,  default=False,           help="load a small dataset for debugging")
@@ -386,9 +386,7 @@ class Runner(object):
         if self.args.encoder == 'vqgan':
             self.ae_params = list(self.model.encoder.parameters())+ list(self.model.decoder.parameters())+list(self.model.quantize.parameters())+list(self.model.quant_conv.parameters())+list(self.model.post_quant_conv.parameters())
             self.disc_params= self.model.loss.discriminator.parameters()
-        elif self.args.encoder == 'vit_vqgan':
-            self.ae_params = list(self.model.encoder.parameters())+ list(self.model.decoder.parameters())+list(self.model.quantizer.parameters())+list(self.model.pre_quant.parameters())+list(self.model.post_quant.parameters())
-            self.disc_params= self.model.loss.discriminator.parameters()
+        
         elif self.args.encoder == 'vae':
             self.ae_params =  list(self.model.encoder.parameters())+ list(self.model.decoder.parameters())+list(self.model.quant_conv.parameters())+list(self.model.post_quant_conv.parameters())
             self.disc_params= self.model.loss.discriminator.parameters()
@@ -525,45 +523,25 @@ class Runner(object):
                 num_batches=0
                 with torch.autocast("cuda", dtype=torch.float16): 
                     
-                    #must understand what the following code does from the train_loader to the frames in and out.
-                    #if self.args.encoder == 'vqgan':
+     
                     print("batch shape is ",batch.shape)
                     batch = batch.reshape(-1,1,128,128)
-                    #recons,qloss = self.model(batch)
+            
 
                     optimizer_idx=0
                     global_step=epoch*steps_per_epoch+i
-                   # local_step = epoch * steps_per_epoch + i
-
-                    # Convert to tensor and synchronize across GPUs
-                   # step_tensor = torch.tensor(local_step, device="cuda")
-                   # torch.distributed.all_reduce(step_tensor, op=torch.distributed.ReduceOp.SUM)
-
-                    # Update global_step with synchronized value
-                    #global_step = step_tensor.item()
-                    #print(global_step)
-                    #ae_loss,log_dict_ae= self.model.compute_loss(qloss,batch,recons,optimizer_idx,global_step,last_layer=self.model.get_last_layer(),split="train")
+              
                     if self.args.encoder == 'vae':
                         recons,ae_loss,ae_loss_dict = self.model(batch,optimizer_idx,global_step)
                     if self.args.encoder == 'vqgan':
                         recons,ae_loss,ae_loss_dict = self.model(batch,optimizer_idx,global_step,alpha,beta,delta)
-                    elif self.args.encoder == 'vit_vqgan':
-                        recons,ae_loss,ae_loss_dict = self.model(batch,optimizer_idx,global_step,i)
+          
 
                     self.accelerator.backward(ae_loss)
                     epoch_loss_ae += ae_loss
 
 
-                    # print("batch shape", batch.shape)
-                    # radar_batch = self._get_seq_data(batch) #just returns the batch
-                    # frames_in, frames_out = radar_batch[:,:self.args.frames_in], radar_batch[:,self.args.frames_in:]
-                    # assert radar_batch.shape[1] == self.args.frames_out + self.args.frames_in, "radar sequence length error"
-                    # print("frames_in shape", frames_in.shape)
-                    # print("frames_out shape", frames_out.shape)
-                    # loss, _ = self.model(input_tensor=frames_in, target_tensor=frames_out)
-                    
-                    # self.accelerator.backward(loss)
-
+            
                     if self.cur_step == 0:
                         # training process check
                         print("paramters with no grad")
@@ -592,9 +570,7 @@ class Runner(object):
                          recons,disc_loss,disc_loss_dict = self.model(batch,optimizer_idx,global_step)
                     if self.args.encoder == 'vqgan' :
                         recons,disc_loss,disc_loss_dict = self.model(batch,optimizer_idx,global_step,alpha,beta,delta)
-                    elif self.args.encoder == 'vit_vqgan':
-                        recons,disc_loss,disc_loss_dict = self.model(batch,optimizer_idx,global_step,i)
-                   
+       
                    # recons,disc_loss,disc_loss_dict = self.model(batch,optimizer_idx,global_step)
 
                 self.accelerator.backward(disc_loss)
@@ -732,7 +708,8 @@ class Runner(object):
         output_folder = f'TrainingReconstructions/Training_recons_{output_folder}'
         output_folder = osp.join(self.exp_dir, output_folder)
         if not os.path.exists(output_folder):
-            os.makedirs(output_folder)
+            os.makedirs(output_folder, exist_ok=True)
+
 
         #self.load(milestone)
         inputs =[]
@@ -878,9 +855,7 @@ def main():
     if args.testing:
         assert args.buidl_dirs == False, "Save test samples in same directories of training"
         exp.check_milestones(target_ckpt=args.ckpt_milestone)
-   # exp.disp_recons('Checkpoints/ckpt-66980-VQGAN-withLPIPS.pt')
-    #exp.disp_recons('Exps/basic_exps/Singlevqgan/sevir/2024-11-19_10-43-57_phydnet/checkpoints/ckpt-174122.pt')
-    
+  
 
 if __name__ == '__main__':
     # 测试代码各模块执行效率

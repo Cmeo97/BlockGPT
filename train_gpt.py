@@ -219,7 +219,7 @@ def parse_args():
                         help="The scheduler type to use.", choices=["linear", "cosine", "cosine_with_restarts", "polynomial", "constant", "constant_with_warmup"])
     parser.add_argument("--num_warmup_steps", type=int, default=5000,
                         help="Number of steps for the warmup in the lr scheduler.")
-    parser.add_argument("--output_dir", type=str, default="/space2/vsarathchandra/blockGPT/Outputs", help="Where to store the final model.")
+    parser.add_argument("--output_dir", type=str, default="/projects/0/prjs0951/Varun/Outputs", help="Where to store the final model.")
     parser.add_argument("--seed", type=int, default=None, help="A seed for reproducible training.")
     parser.add_argument("--vqgan_type", type=str, default="vqgan",
                         choices=['vqgan','vae'], help="VQGAN model type to use.")

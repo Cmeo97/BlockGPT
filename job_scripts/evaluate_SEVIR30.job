@@ -25,6 +25,8 @@
 # --gpus number of gpus
 # --mail-type=type
 # --mail-user=user
-
+module load 2023
+conda init
+source activate blockgpt
 
 python evaluate.py  --dataset_name 'sevir' --segment_length 9 --context_length 3 --eval_checkpoints "configs/Evaluations/evaluate_config_SEVIR30.yaml" --time_resolution 30 --seq_len_sevir 49
