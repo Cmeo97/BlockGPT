@@ -1,0 +1,4 @@
+Outputs/
+job_scripts/
+__pycache__/
+.DS_Store
