@@ -1,103 +1,103 @@
 vqgan:
   config: configs/Encoders/config_vqgan.json
-  checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/vqgan_KNMI.pt
+  checkpoint: /projects/0/prjs0951/Varun/Checkpoints/vqgan_knmi_7M_1024_ckpt-177500.pt
 
 blockGPT_models:
   - name: blockGPT
     config: configs/GPT/config_blockGPT_KNMI30.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_seed1.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_seed1.safetensors
     vqgan_type: vqgan
 
 
   - name: blockGPT_seed2
     config: configs/GPT/config_blockGPT_KNMI30.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_seed2.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_seed2.safetensors
     vqgan_type: vqgan
 
   - name: blockGPT_seed3
     config: configs/GPT/config_blockGPT_KNMI30.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_seed3.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_seed3.safetensors
     vqgan_type: vqgan
 
   # === Ablation Studies === 4H (heads): 50M parameters. 16H: 200M parameters
   - name: blockGPT_4H
     config: configs/GPT/config_blockGPT_KNMI30_ablation_50Mparams.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablation_50Mparams_seed1.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablation_50Mparams_seed1.safetensors
     vqgan_type: vqgan
 
   - name: blockGPT_4H_seed2
     config: configs/GPT/config_blockGPT_KNMI30_ablation_50Mparams.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablation_50Mparams_seed2.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablation_50Mparams_seed2.safetensors
     vqgan_type: vqgan
 
   - name: blockGPT_4H_seed3
     config: configs/GPT/config_blockGPT_KNMI30_ablation_50Mparams.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablation_50Mparams_seed3.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablation_50Mparams_seed3.safetensors
     vqgan_type: vqgan 
     
   # === 16H Ablation ===
   - name: blockGPT_16H
     config: configs/GPT/config_blockGPT_KNMI30_ablation_200Mparams.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablation_200Mparams_seed1.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablation_200Mparams_seed1.safetensors
     vqgan_type: vqgan
 
   - name: blockGPT_16H_seed2
     config: configs/GPT/config_blockGPT_KNMI30_ablation_200Mparams.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablation_200Mparams_seed2.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablation_200Mparams_seed2.safetensors
     vqgan_type: vqgan
 
   - name: blockGPT_16H_seed3
     config: configs/GPT/config_blockGPT_KNMI30_ablation_200Mparams.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablation_200Mparams_seed3.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablation_200Mparams_seed3.safetensors
     vqgan_type: vqgan
 
   # === Block Size Ablation (Block Size 8) ===
   - name: blockGPT_block8
     config: configs/GPT/config_blockGPT_KNMI30_ablation_rowbyrow.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablations_rowbyrow_seed1.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablations_rowbyrow_seed1.safetensors
     vqgan_type: vqgan
 
   - name: blockGPT_block8_seed2
     config: configs/GPT/config_blockGPT_KNMI30_ablation_rowbyrow.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablations_rowbyrow_seed2.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablations_rowbyrow_seed2.safetensors
     vqgan_type: vqgan
 
   - name: blockGPT_block8_seed3
     config: configs/GPT/config_blockGPT_KNMI30_ablation_rowbyrow.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/blockGPT_KNMI30_ablations_rowbyrow_seed3.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/blockGPT_KNMI30_ablations_rowbyrow_seed3.safetensors
     vqgan_type: vqgan
 
   # Nowcasting #Please retain the name to start with blockGPT
   - name: nowcastingGPT_seed1
     config: configs/GPT/config_nowcasting_KNMI30.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_KNMI30_seed1.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/nowcastingGPT_KNMI30_seed1.safetensors
     vqgan_type: vqgan
 
   - name: nowcastingGPT_seed2
     config: configs/GPT/config_nowcasting_KNMI30.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_KNMI30_seed2.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/nowcastingGPT_KNMI30_seed2.safetensors
     vqgan_type: vqgan
 
   - name: nowcastingGPT_seed3
     config: configs/GPT/config_nowcasting_KNMI30.json
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/nowcastingGPT_KNMI30_seed3.safetensors
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/nowcastingGPT_KNMI30_seed3.safetensors
     vqgan_type: vqgan
 
 
 diffcast_models:
   - name: diffcast_phydnet_seed1
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_KNMI30_seed1.pt
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/diffcast_phydnet_KNMI30_seed1.pt
     use_BlockGPT: false
 
   - name: diffcast_phydnet_seed2
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_KNMI30_seed2.pt
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/diffcast_phydnet_KNMI30_seed2.pt
     use_BlockGPT: false
 
   - name: diffcast_phydnet_seed3
-    checkpoint: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints/diffcast_phydnet_KNMI30_seed3.pt
+    checkpoint: /projects/0/prjs0951/Varun/Checkpoints/FinalCheckpoints/diffcast_phydnet_KNMI30_seed3.pt
     use_BlockGPT: false
 
 kwargs:
   in_shape: [1, 128, 128]
 
-#python evaluate.py --debug --dataset_name 'knmi' --segment_length 9 --context_length 3 --eval_FinalCheckpoints "evaluate_config_KNMI30.yaml" --time_resolution 30 
+#python evaluate.py --debug --dataset_name 'knmi' --segment_length 9 --context_length 3 --eval_checkpoints "evaluate_config_KNMI30.yaml" --time_resolution 30 

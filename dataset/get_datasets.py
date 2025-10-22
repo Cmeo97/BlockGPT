@@ -99,10 +99,12 @@ def vis_res(pred_seq, gt_seq, save_path, data_type='vil',
 
 DATAPATH = {
     'cikm' : 'path/to/dataset/cikm.h5',
-    'shanghai' : '/space2/vsarathchandra/Diffcast/Data/shanghai.h5',
-    'shanghai_30min':'/space2/vsarathchandra/Diffcast/shanghai_30min.h5',
-    'meteo' : '/space2/vsarathchandra/Diffcast/Data/meteo_radar.h5',
-    'sevir' : '/space2/vsarathchandra/Data',
+    'shanghai' : '/projects/0/prjs0951/Varun/Shanghai/shanghai.h5',
+    'shanghai_30mins' : '/projects/0/prjs0951/Varun/Shanghai/shanghai_30min.h5',
+    'meteo' : '/projects/0/prjs0951/Varun/meteo_radar.h5',
+    'sevir' : '/projects/0/prjs0951/Varun/SEVIR/Data',
+    'knmi': '/projects/0/prjs0951/Varun/KNMI/H5',
+    'knmi_5mins': '/projects/0/prjs0951/Varun/KNMI/5mins'
 }
 
 def get_dataset(data_name, img_size, seq_len, temp_res_sevir,debug, **kwargs):
@@ -130,9 +132,9 @@ def get_dataset(data_name, img_size, seq_len, temp_res_sevir,debug, **kwargs):
 
     elif dataset_name == 'knmi':
         from .dataset_knmi import KNMITorchDataset,  gray2color, PIXEL_SCALE, THRESHOLDS
-        train_path = '/space2/vsarathchandra/Data/KNMI_5mins/Curated/H5/train'
-        val_path = '/space2/vsarathchandra/Data/KNMI_5mins/Curated/H5/val'
-        test_path = '/space2/vsarathchandra/Data/KNMI_5mins/Curated/H5/test'
+        train_path = '/projects/0/prjs0951/Varun/KNMI/H5/train'
+        val_path = '/projects/0/prjs0951/Varun/KNMI/H5/val'
+        test_path = '/projects/0/prjs0951/Varun/KNMI/H5/test'
         batch_size = kwargs.get('batch_size', 1)
 
         train = KNMITorchDataset(dataset_dir=train_path,
@@ -154,9 +156,9 @@ def get_dataset(data_name, img_size, seq_len, temp_res_sevir,debug, **kwargs):
 
     elif dataset_name == 'knmi_5mins':
         from .dataset_knmi import KNMITorchDataset,  gray2color, PIXEL_SCALE, THRESHOLDS
-        train_path = '/space2/vsarathchandra/Data/KNMI_5mins/Curated/H5/train'
-        val_path = '/space2/vsarathchandra/Data/KNMI_5mins/Curated/H5/val'
-        test_path = '/space2/vsarathchandra/Data/KNMI_5mins/Curated/H5/test'
+        train_path = '/projects/0/prjs0951/Varun/KNMI/5mins/train'
+        val_path = '/projects/0/prjs0951/Varun/KNMI/5mins/val'
+        test_path = '/projects/0/prjs0951/Varun/KNMI/5mins/test'
         batch_size = kwargs.get('batch_size', 1)
 
         train = KNMITorchDataset(dataset_dir=train_path,

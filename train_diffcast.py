@@ -13,7 +13,6 @@ from datetime import timedelta
 import json
 import matplotlib.pyplot as plt
 import numpy as np  
-
 #import torch._dynamo 
 #from pysteps.visualization import plot_precip_field
 import wandb 
@@ -56,10 +55,9 @@ def create_parser():
     parser.add_argument('--backbone',       type=str,   default='phydnet',           help='backbone model for deterministic prediction')
     parser.add_argument('--stochastic',     type=str,   default='diffusion',           help='diffusion model for stochastic prediction')
     parser.add_argument('--use_diff',       action="store_true", default=True,        help='Weather use diff framework, as for ablation study')
-    parser.add_argument('--backbone_config',     type=str,   default=None,           help='path to backbone config file, needed only for BlockGPT')
-    
+    parser.add_argument('--backbone_config',     type=str,   default=None,           help='path to backbone config file, needed only for BlockGPT')   
     parser.add_argument("--seed",           type=int,   default=0,              help='Experiment seed')
-    parser.add_argument("--exp_dir",        type=str,   default='Outputs/',   help="experiment directory")
+    parser.add_argument("--exp_dir",        type=str,   default='/projects/0/prjs0951/Varun/Outputs',   help="experiment directory")
     
 
     parser.add_argument("--debug",          type=bool,  default=False,           help="load a small dataset for debugging")
@@ -145,17 +143,7 @@ class Runner(object):
             log_with        =   "wandb",
         )
         
-        # Config log tracker 'wandb' from accelerate
-        # self.accelerator.init_trackers(
-        #     project_name=f"{self.model_name}_{self.args.dataset}_{self.args.exp_note}",
-        #     config=self.args.__dict__,
-        #     init_kwargs={"wandb": 
-        #         {
-        #         "mode": self.args.wandb_state,
-        #         # 'resume': self.args.ckpt_milestone
-        #         }
-        #                  }   # disabled, online, offline
-        # )
+
         
         print_log('============================================================', self.is_main)
         print_log("                 Experiment Start                           ", self.is_main)
@@ -272,7 +260,7 @@ class Runner(object):
         self.thresholds      = THRESHOLDS
         self.scale_value     = PIXEL_SCALE
         
-        if self.args.dataset != 'sevir' and self.args.dataset != 'knmi':
+        if self.args.dataset != 'sevir' and self.args.dataset != 'knmi' and self.args.dataset != 'knmi_5mins':
             # preload big batch data for gradient accumulation
             self.train_loader = torch.utils.data.DataLoader(
                 train_data, batch_size=self.args.batch_size*self.args.grad_acc_step, shuffle=True, num_workers=self.args.num_workers, drop_last=True
@@ -323,13 +311,12 @@ class Runner(object):
             with open(self.args.backbone_config) as f:
                 kwargs = json.load(f)
                 config = BlockGPTBackboneConfig(**kwargs)
-            model = get_model(config)     
-            #turng off grad for backbone    
+            model = get_model(config)        
+            #turng off grad for backbone 
             for param in model.parameters():
-                 param.requires_grad = False
+                param.requires_grad = False
         else:
             raise NotImplementedError
-
 
         
         if self.args.use_diff:
@@ -356,7 +343,6 @@ class Runner(object):
         if self.is_main:
             total = sum([param.nelement() for param in self.model.parameters()])
             print_log("Main Model Parameters: %.2fM" % (total/1e6), self.is_main)
-
 
     def _build_optimizer(self):
         # =================================
@@ -481,6 +467,7 @@ class Runner(object):
 
                     radar_batch = self._get_seq_data(batch)
                     frames_in, frames_out = radar_batch[:,:self.args.frames_in], radar_batch[:,self.args.frames_in:]
+                   
                     assert radar_batch.shape[1] == self.args.frames_out + self.args.frames_in, "radar sequence length error"
                     loss, _ = self.model(input_tensor=frames_in, target_tensor=frames_out)
                     epoch_loss+=loss

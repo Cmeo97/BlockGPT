@@ -31,7 +31,7 @@ def parse_args():
                         ),
                         )
     
-    
+    parser.add_argument('--output_dir', type=str, required=True,help="Specific the dir to save the evaluation results.")
     parser.add_argument('--n_tokens', type=int,default=64, required=False,help="number of tokens per frame defined in the encoder")
     
     # datasets
@@ -51,6 +51,8 @@ def parse_args():
     parser.add_argument("--debug", action="store_true", default=False)
     parser.add_argument("--device", default=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")),
     parser.add_argument("--eval_checkpoints", type=str, default="evaluate_config.yaml",)
+    parser.add_argument("--simvp", action="store_true", default=False,
+                        help="Set to true if want to evaluate on baseline.")
 
     args = parser.parse_args()
 
@@ -309,8 +311,8 @@ def plot_predictions_per_level_sampled(
         assert C == 1 and H == 128 and W == 128, f"Unexpected event shape: {events.shape}"
 
         # Sample only required indices
-        sampled_indices = random.sample(range(B), min(num_samples, B))
-        sampled_events = events[sampled_indices].to(device)
+        sampled_indices = random.sample(range(B), min(num_samples, B)) # list of event indices
+        sampled_events = events[sampled_indices].to(device) #  len([[T,1,H,W],[]....,[]]) = num_samples
 
         # Prepare per-model predictions
         predictions_by_model = {model_name: [] for model_name in loaded_models}
@@ -324,7 +326,7 @@ def plot_predictions_per_level_sampled(
                 if model_name.startswith("diffcast"):
                     model = components["model"].to(device)
                     pred = model.sample(chunk[:, :args.context_length], args.segment_length - args.context_length)[0]
-                    pred = torch.cat([chunk[:, :args.context_length], pred], dim=1)
+                    pred = torch.cat([chunk[:, :args.context_length], pred], dim=1) # pred:[T-frames_in, W,H]
                 else:
                     tokenizer = components["tokenizer"].to(device)
                     predictor = components["predictor"].to(device)
@@ -563,7 +565,7 @@ def compute_all_metrics(stored_events, loaded_models, thresholds, device="cuda",
 
     for model_name, model_components in loaded_models.items():
         print("processing model ",model_name)
-        if model_name.startswith("diffcast"):
+        if model_name.startswith("diffcast") or model.name.startswith("chronecast"):
             model = model_components.get("model")
             model.to(device)
         else:
@@ -580,6 +582,8 @@ def compute_all_metrics(stored_events, loaded_models, thresholds, device="cuda",
         aggregated_mse = []
         aggregated_mae = []
         aggregated_pcc = []
+        aggregated_nmse = []
+        aggregated_rmse = []
 
         combined_events = []
         combined_predictions = []
@@ -594,6 +598,8 @@ def compute_all_metrics(stored_events, loaded_models, thresholds, device="cuda",
             mse_per_time_step = np.zeros(T)
             mae_per_time_step = np.zeros(T)
             pcc_per_time_step = np.zeros(T)
+            nmse_per_time_step = np.zeros(T)
+            rmse_per_time_step = np.zeros(T)
 
             all_predictions = []
             all_events = []
@@ -604,7 +610,7 @@ def compute_all_metrics(stored_events, loaded_models, thresholds, device="cuda",
                     end_idx = min(start_idx + chunk_size, num_events)
                     events_chunk = events[start_idx:end_idx]  # Shape: [chunk_size, T, 1, 128, 128]
             
-                    if model_name.startswith("diffcast"):
+                    if model_name.startswith("diffcast") or model_name.startswith("chronecast"):
                         print("events chunk shape is ",events_chunk.shape)
                         preds_chunk = model.sample(events_chunk[:, :args.context_length], args.segment_length-args.context_length)[0]
                         preds_chunk = torch.cat([events_chunk[:,:args.context_length],preds_chunk],dim=1)
@@ -631,33 +637,50 @@ def compute_all_metrics(stored_events, loaded_models, thresholds, device="cuda",
 
             # Compute MSE, MAE, and PCC per time step for the level
             for t in range(T):
-                mse = mean_squared_error(all_events[:, t].flatten(), all_predictions[:, t].flatten())
-                mae = mean_absolute_error(all_events[:, t].flatten(), all_predictions[:, t].flatten())
+                # mse = mean_squared_error(all_events[:, t].flatten(), all_predictions[:, t].flatten())
+                # mae = mean_absolute_error(all_events[:, t].flatten(), all_predictions[:, t].flatten())
                 pcc = det_cont_fct(all_events[:, t], all_predictions[:, t], scores=["corr_p"], thr=0.1)["corr_p"]
+                mae = det_cont_fct(all_events[:, t], all_predictions[:, t], scores=["MAE"], thr=0.1)["MAE"]
+                mse = det_cont_fct(all_events[:, t], all_predictions[:, t], scores=["MSE"], thr=0.1)["MSE"]
+                nmse = det_cont_fct(all_events[:, t], all_predictions[:, t], scores=["NMSE"], thr=0.1)["NMSE"]
+                rmse = det_cont_fct(all_events[:, t], all_predictions[:, t], scores=["RMSE"], thr=0.1)["RMSE"]
+
+
                 mse_per_time_step[t] = mse
                 mae_per_time_step[t] = mae
                 pcc_per_time_step[t] = pcc
+                nmse_per_time_step[t] = nmse
+                rmse_per_time_step[t] = rmse
 
             # Store per-level results
             model_per_level[level] = {
                 "MSE": mse_per_time_step.tolist(),
                 "MAE": mae_per_time_step.tolist(),
                 "PCC": pcc_per_time_step.tolist(),
+                "NMSE": nmse_per_time_step.tolist(),
+                "RMSE": rmse_per_time_step.tolist()
             }
 
             # Accumulate for overall aggregation
             aggregated_mse.append(mse_per_time_step)
             aggregated_mae.append(mae_per_time_step)
             aggregated_pcc.append(pcc_per_time_step)
+            aggregated_nmse.append(nmse_per_time_step)
+            aggregated_rmse.append(rmse_per_time_step)
 
         # Aggregate across all levels
         aggregated_mse = np.mean(aggregated_mse, axis=0)
         aggregated_mae = np.mean(aggregated_mae, axis=0)
         aggregated_pcc = np.mean(aggregated_pcc, axis=0)
+        aggregated_nmse = np.mean(aggregated_nmse, axis=0)
+        aggregated_rmse = np.mean(aggregated_rmse, axis=0)
+
         aggregated_results[model_name] = {
             "MSE": aggregated_mse.tolist(),
             "MAE": aggregated_mae.tolist(),
             "PCC": aggregated_pcc.tolist(),
+            "NMSE": aggregated_nmse.tolist(),
+            "RMSE": aggregated_rmse.tolist(),
         }
 
         # Store per-level results for this model
@@ -683,7 +706,6 @@ def compute_all_metrics(stored_events, loaded_models, thresholds, device="cuda",
 
 def get_diff_model(path,kwargs,use_BlockGPT=False,args=None):
 
-  
         combined_state_dict = torch.load(path)
         combined_state_dict = combined_state_dict['model']
         backbone_state_dict = {k.replace("backbone_net.", ""): v for k, v in combined_state_dict.items() if k.startswith("backbone_net.")}
@@ -695,10 +717,19 @@ def get_diff_model(path,kwargs,use_BlockGPT=False,args=None):
             with open(config_path) as f:
                 kwargs = json.load(f)
                 config = BlockGPTBackboneConfig(**kwargs)
+                print(config_path)
+                print(config)
                 backbone = get_model(config)        
         else:
-            from models.phydnet import get_model
-            backbone= get_model(**kwargs)
+            if 'simvp' in path:
+                print("Load simvp...")
+                from models.simvp import get_model
+                backbone = get_model(**kwargs)
+            
+            else:
+                print("Load Phydnet...")
+                from models.phydnet import get_model
+                backbone= get_model(**kwargs)
 
         from models.diffcast import get_model
         kwargs = {
@@ -709,6 +740,7 @@ def get_diff_model(path,kwargs,use_BlockGPT=False,args=None):
                 'T_out':  args.segment_length-args.context_length,
                 'sampling_timesteps': 250,
             }
+          
         diff_model = get_model(**kwargs)
         backbone.load_state_dict(backbone_state_dict)
         diff_model.load_state_dict(main_model_state_dict)
@@ -765,14 +797,15 @@ def display_knmi(ground_truth, predictions_dict, output_path=None, skip_alternat
 
     # Plot ground truth
     for i, ax in enumerate(axes[0]):
-        plot_precip_field(ground_truth[i] * 40, ax=ax, title=f"GT t={indices[i]}", colorbar=False)
+        ground_truth_thr = np.where((ground_truth[i] <= 0.00625), 0, ground_truth[i])
+        plot_precip_field(ground_truth_thr * 40, ax=ax, title=f"GT t={indices[i]}", colorbar=False)
         ax.set_title(f"GT t={indices[i]}", fontsize=10, wrap=True)
 
     # Plot predictions
     for row, (model_name, prediction) in enumerate(predictions_dict.items(), start=1):
-       
         for i, ax in enumerate(axes[row]):
-            plot_precip_field(prediction[i] * 40, ax=ax, colorbar=False)
+            prediction_thr = np.where((prediction[i]<= 0.00625), 0, prediction[i])
+            plot_precip_field(prediction_thr * 40, ax=ax, colorbar=False)
             ax.set_title(f"{model_name} t={indices[i]}", fontsize=10, wrap=True)
 
     # Super title
@@ -816,8 +849,7 @@ def load_model_config(args):
         for model_info in config.get("diffcast_models", []):
             if model_info["use_BlockGPT"]:
                 kwargs = {
-             "config_path" : model_info["config_path"]
-        
+                    "config_path" : model_info["config_path"]
                 }
             else:
                 kwargs = {
@@ -847,7 +879,7 @@ def main():
        thresholds = [16, 74, 133, 160, 181, 219]
     else:
          raise ValueError("Unsupported dataset name. Use 'knmi', 'knmi_5mins', or 'sevir'.")
-    output_folder = "Results/Evaluations" 
+    output_folder = args.output_dir
     output_folder = os.path.join(output_folder, args.dataset_name)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     output_folder = f"{output_folder}_{timestamp}"
@@ -860,7 +892,7 @@ def main():
     stored_events = store_all_events(eval_dataloader,categorized_indices,args.batch_size)
  
 
-    output_folder = "Results/Evaluations" 
+    output_folder = args.output_dir
     output_folder = os.path.join(output_folder, args.dataset_name)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     output_folder = f"{output_folder}_{timestamp}"
@@ -872,10 +904,11 @@ def main():
         for model_name in loaded_models.keys():
             f.write(model_name + "\n")
 
+    print("=========== Plot predictions for all models ==========")
     output_folder = os.path.join(output_folder, f"temp_res_{args.time_resolution}")
     plots_path = os.path.join(output_folder, "predictions")
     plot_predictions_per_level_sampled(stored_events, loaded_models, plots_path, num_samples=args.batch_size, chunk_size=args.batch_size,args=args)
-
+    print("=========== Compute all metrics for all models ==========")
     results = compute_all_metrics(stored_events, loaded_models, thresholds, device=args.device, chunk_size=args.batch_size,args=args)
     import pickle
 

@@ -8,7 +8,18 @@ BlockGPT is a spatio-temporal generative model designed for precipitation nowcas
 - VQGAN/VAE encoders
 
 ---
+## Model Architecture
+BlockGPT is a two-stage, frame-level autoregressive model for precipitation nowcasting. Each 128×128 radar frame is tokenized by a VQ-GAN into an 8×8 grid (64 tokens) from a 1,024-entry codebook, preserving 2D structure while compressing space. A Transformer then predicts the entire next latent frame conditioned on past frames using a block attention mask: bidirectional attention within a frame (spatial coherence) and strictly causal attention across frames (temporal order). The model uses 8 layers, 8 heads, 1,024-dim embeddings, and ~103M parameters, trained for 500k steps (batch 8). This frame-level factorization removes arbitrary token ordering and yields around **27–31 times faster inference with improved skill**.
+![](./figs/model_arch.png)
 
+## Qualitative Results
+> For more experimental results, please refer to our [paper](https://arxiv.org/abs/2510.06293)!
+### SEVIR30 Dataset
+BlockGPT (second row) best maintains structure and motion; a tendency to overestimate peak intensity emerges at longer lead times.
+![](./figs/SEVIR30_showcase.png)
+### KNMI30 Dataset 
+BlockGPT (second row) preserves the rainband morphology and advection but modestly overestimates the core intensity at long lead times; baselines miss the shape and location.
+![](./figs/KNMI30_showcase.png)
 ## 🗺️ Repository Structure
 
 ```
@@ -153,19 +164,27 @@ Use `plot_metrics.ipynb` to load the `.pkl` files from `FinalPickledResults/` an
 
 ## 📚 Acknowledgements
 
-- [NowcastingGPT]
-- [DiffCast]
-- [PhyDNet]
+- [NowcastingGPT: Extreme Precipitation Nowcasting using Transformer-based Generative Models](https://arxiv.org/abs/2403.03929)
+- [DiffCast: A Unified Framework via Residual Diffusion for Precipitation Nowcasting](https://arxiv.org/abs/2312.06734)
+- [Disentangling Physical Dynamics from Unknown Factors for Unsupervised Video Prediction](https://arxiv.org/abs/2003.01460)
 
 ---
 
 ## 🔮 Citation
-
 *If you use BlockGPT in your research, please cite this repository (bibtex to be added after paper submission).*
-
-
-## Checkpoints 
+```bibtex
+@misc{meo2025blockgptspatiotemporalmodellingrainfall,
+title={BlockGPT: Spatio-Temporal Modelling of Rainfall via Frame-Level Autoregression}, 
+author={Cristian Meo and Varun Sarathchandran and Avijit Majhi and Shao Hung and Carlo Saccardi and Ruben Imhoff and Roberto Deidda and Remko Uijlenhoet and Justin Dauwels},
+year={2025},
+eprint={2510.06293},
+archivePrefix={arXiv},
+primaryClass={cs.LG},
+url={https://arxiv.org/abs/2510.06293}, 
+}
+```
+<!-- ## Checkpoints 
 
 Checkpoints for all models used in my thesis are both on snellius and quechua. 
 On snellius: /projects/0/prjs0951/Varun/FinalCheckpoints
-On quechua: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints
+On quechua: /space2/vsarathchandra/iVideoGPT/FinalCheckpoints -->

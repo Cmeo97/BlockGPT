@@ -2,7 +2,7 @@
 
 
 # TODO: if you are running on a cluster, change the info below to match your cluster's configuration.
-#SBATCH -J WeatherForcasting_VQGAN_PERTURB_SEVIR
+#SBATCH -J WeatherForcasting_VQGAN_PERTURB_KNMI
 #SBATCH --nodes=1
 #SBATCH --ntasks=2
 #SBATCH --gpus=2
