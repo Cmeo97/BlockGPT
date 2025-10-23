@@ -171,7 +171,7 @@ Use `plot_metrics.ipynb` to load the `.pkl` files from `FinalPickledResults/` an
 ---
 
 ## 🔮 Citation
-*If you use BlockGPT in your research, please cite this repository (bibtex to be added after paper submission).*
+*If you use BlockGPT in your research, please cite this repository.*
 ```bibtex
 @misc{meo2025blockgptspatiotemporalmodellingrainfall,
 title={BlockGPT: Spatio-Temporal Modelling of Rainfall via Frame-Level Autoregression}, 
