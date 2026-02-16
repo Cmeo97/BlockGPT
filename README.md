@@ -175,7 +175,7 @@ Use `plot_metrics.ipynb` to load the `.pkl` files from `FinalPickledResults/` an
 ```bibtex
 @misc{meo2025blockgptspatiotemporalmodellingrainfall,
 title={BlockGPT: Spatio-Temporal Modelling of Rainfall via Frame-Level Autoregression}, 
-author={Cristian Meo and Varun Sarathchandran and Avijit Majhi and Shao Hung and Carlo Saccardi and Ruben Imhoff and Roberto Deidda and Remko Uijlenhoet and Justin Dauwels},
+author={Cristian Meo and Varun Sarathchandran and Avijit Majhi and Shao-Hsuan Hung and Carlo Saccardi and Ruben Imhoff and Roberto Deidda and Remko Uijlenhoet and Justin Dauwels},
 year={2025},
 eprint={2510.06293},
 archivePrefix={arXiv},
